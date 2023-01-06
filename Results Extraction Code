@@ -1,0 +1,20 @@
+Public Sub Test()
+Dim myfile As String, A As Variant, B As Variant
+myfile1 = "#L"
+myfile2 = "#M"
+Open myfile1 For Input As #1
+Open myfile2 For Output As #2
+Do Until EOF(1)
+Line Input #1, A
+If A = "> <POSE_NUMBER>" Then
+Line Input #1, B
+ElseIf B = "1" Then
+Print #2, A
+End If
+Loop
+Close #1
+Close #2
+End Sub
+
+#L = Input file directory
+#M = Output file directory
