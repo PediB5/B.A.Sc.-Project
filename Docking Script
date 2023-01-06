@@ -1,0 +1,28 @@
+#!/usr/bin/perl -w
+use strict;
+use MdmDiscoveryScript;
+use MdmCommands;
+use ProtocolCommands;
+
+my $parameterMap = Protocol::ParameterMap::Create();
+
+my $document = FileOpen('#P');
+my $Receptor = $document->Molecules->Item(0);
+
+my $xyz = Mdm::Point::Create( #X, #Y, #Z );
+my $sphere = $document->Molecules->Item(0)->CreateSphere( { XYZ => $xyz, Radius => #R } );
+
+$parameterMap->AddItem("Input Receptor", $Receptor);
+$parameterMap->AddItem("Input Ligands", '#L');
+$parameterMap->AddItem("Input Site Sphere", $sphere);
+
+my $server = "localhost:9943";
+
+LaunchProtocol('Dock Ligands (LibDock)', $parameterMap, $server);
+
+#P = Prepared protein (*.pdb) file directory
+#L = Ligands bank (*.sdf) file directory
+#X = Prefered binding site X cordinate
+#Y = Prefered binding site Y cordinate
+#Z = Prefered binding site Z cordinate
+#R = Prefered binding site Radius
